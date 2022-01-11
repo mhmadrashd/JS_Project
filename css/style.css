@@ -263,7 +263,7 @@ ul {
   z-index: -1;
   transform: skewY(-6deg);
   transform-origin: top left;
-    
+  
 }
 .landing .container {
   min-height: calc(100vh - 72px);
@@ -360,11 +360,14 @@ ul {
 .menu {
   padding-top: var(--main-padding-top);
   padding-bottom: var(--main-padding-bottom);
+  background-image: url(../imgs/Back_Menu.gif);
+  background-size: contain;
+  background-position-x: -150px;
 }
 .menu .main-nav  li{
-width: 20%;
-margin-left: auto;
-margin-right: auto;
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .menu .main-nav  li #btnPlay{
   background-color: rgba(10, 213, 10, 0.9);
@@ -400,6 +403,7 @@ margin-right: auto;
 .menu .main-nav  li #btnTeam:hover{
   background-color: rgba(7, 43, 187, 0.842);
 }
+
 .menu .main-nav > li > a {
   display: flex;
   justify-content: center;
@@ -813,6 +817,4 @@ margin-right: auto;
     height: 100%;
   }
 }
-
-
 /* End Animation */
