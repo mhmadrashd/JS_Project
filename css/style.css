@@ -263,7 +263,7 @@ ul {
   z-index: -1;
   transform: skewY(-6deg);
   transform-origin: top left;
-    
+  
 }
 .landing .container {
   min-height: calc(100vh - 72px);
@@ -360,6 +360,9 @@ ul {
 .menu {
   padding-top: var(--main-padding-top);
   padding-bottom: var(--main-padding-bottom);
+  background-image: url(../imgs/Back_Menu.gif);
+  background-size: contain;
+  background-position-x: -150px;
 }
 .menu .main-nav  li{
   width: 20%;
