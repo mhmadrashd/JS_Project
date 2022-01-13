@@ -2,20 +2,31 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = document.body.clientWidth; //document.width is obsolete
 canvas.height = document.body.clientHeight; //document.height is obsolete
-
 // Sound
-let score = 0;
-let myLives = 5;
+if(localStorage.getItem("Status")==0){
+  localStorage.setItem('lives', 5 );
+  localStorage.setItem('score', 0 );
+  localStorage.setItem('stateLevel', 1 );
+
+}
+let score;
+score = localStorage.getItem("score");
+let myLives;
+myLives = localStorage.getItem("lives");
+let stateLevel;
+stateLevel = localStorage.getItem("stateLevel");
 let stateGame = 1; //   0 >> Game Over      1 >> Continue Game
-let stateLevel = 1; //  1 >> Level 1        2 >> Level 2  .....
 let audio;
+
 
 function gameState(value) {
   // 0 >> Change Lives
 
   if (value == 0) {
     myLives--;
+
     if (myLives) {
+      localStorage.setItem('lives', myLives );
 
       player.eaten = true;
       setTimeout(() => { player.eaten = false; }, 1000);
@@ -23,16 +34,19 @@ function gameState(value) {
     else {
       stateGame = 0;
     }
-    console.log("lives", myLives);
   }
 
   // 1 >> Change Score
   else if (value == 1) {
     score++;
+    localStorage.setItem('score', score );
+
     // Next Level
     if ((score % 5 == 0)) {
-
-      stateLevel++;
+      if(stateLevel<3){
+      stateLevel++;    
+      localStorage.setItem('stateLevel', stateLevel );
+}
     }
 
   }
@@ -126,6 +140,9 @@ class Player {
     ctx.closePath();
     // ctx.fillRect(this.x,this.y,this.radius,10);
     if (stateGame == 0) {
+      localStorage.setItem('stateLevel', 1 );
+      localStorage.setItem('score', 0 );
+      localStorage.setItem('lives', 5 );
 
       ctx.clearRect(0, 0, canvas.Width, canvas.Width);
       ctx.font = "100px Comic Sans MS";
