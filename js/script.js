@@ -41,11 +41,11 @@ function gameState(value) {
 
 const sound = () => {
   audio = document.createElement("audio")
-  audio.setAttribute("src", "GameSound.mp3")
+  audio.setAttribute("src", "other/GameSound.mp3")
   audio.setAttribute("controls", "controls")
 }
 sound()
-audio.play()
+// audio.play()
 // audio.loop()
 //player
 const mouse = {
@@ -64,9 +64,9 @@ canvas.addEventListener('mousedown', (e) => {
   // console.log(mouse.x,mouse.y);
 });
 const playerLeft = new Image();
-playerLeft.src = 'fish_swim_left.png';
+playerLeft.src = 'imgs/fish_swim_left.png';
 const playerRight = new Image();
-playerRight.src = 'fish_swim_right.png';
+playerRight.src = 'imgs/fish_swim_right.png';
 
 class Player {
   constructor() {
@@ -160,11 +160,11 @@ const typeOfEnemies = [
   {
     id: 1,
     type: "small",
-    imageFish: ["smallfish/1.png", "smallfish/2.png", "smallfish/3.png", "smallfish/4.png",
-      "smallfish/5.png", "smallfish/6.png", "smallfish/7.png", "smallfish/8.png", "smallfish/9.png",
-      "smallfish/10.png", "smallfish/11.png", "smallfish/12.png", "smallfish/13.png", "smallfish/14.png",
-      "smallfish/15.png", "smallfish/16.png", "smallfish/17.png", "smallfish/18.png", "smallfish/19.png",
-      "smallfish/20.png", "smallfish/21.png", "smallfish/22.png", "smallfish/23.png"],
+    imageFish: ["imgs/smallfish/1.png", "imgs/smallfish/2.png", "imgs/smallfish/3.png", "imgs/smallfish/4.png",
+      "imgs/smallfish/5.png", "imgs/smallfish/6.png", "imgs/smallfish/7.png", "imgs/smallfish/8.png", "imgs/smallfish/9.png",
+      "imgs/smallfish/10.png", "imgs/smallfish/11.png", "imgs/smallfish/12.png", "imgs/smallfish/13.png", "imgs/smallfish/14.png",
+      "imgs/smallfish/15.png", "imgs/smallfish/16.png", "imgs/smallfish/17.png", "imgs/smallfish/18.png", "imgs/smallfish/19.png",
+      "imgs/smallfish/20.png", "imgs/smallfish/21.png", "imgs/smallfish/22.png", "imgs/smallfish/23.png"],
     radius: 20,
     spriteWidth: 600,
     spriteHeight: 300,
@@ -176,9 +176,9 @@ const typeOfEnemies = [
   {
     id: 2,
     type: "medium",
-    imageFish: ["mediumfish/1.png", "mediumfish/2.png", "mediumfish/3.png", "mediumfish/4.png",
-      "mediumfish/5.png", "mediumfish/6.png", "mediumfish/7.png", "mediumfish/8.png", "mediumfish/9.png",
-      "mediumfish/10.png", "mediumfish/11.png", "mediumfish/12.png"],
+    imageFish: ["imgs/mediumfish/1.png", "imgs/mediumfish/2.png", "imgs/mediumfish/3.png", "imgs/mediumfish/4.png",
+      "imgs/mediumfish/5.png", "imgs/mediumfish/6.png", "imgs/mediumfish/7.png", "imgs/mediumfish/8.png", "imgs/mediumfish/9.png",
+      "imgs/mediumfish/10.png", "imgs/mediumfish/11.png", "imgs/mediumfish/12.png"],
     radius: 35,
     spriteWidth: 350,
     spriteHeight: 220,
@@ -190,11 +190,11 @@ const typeOfEnemies = [
   {
     id: 3,
     type: "larg",
-    imageFish: ["largfish/1.png", "largfish/2.png", "largfish/3.png", "largfish/4.png",
-      "largfish/5.png", "largfish/6.png", "largfish/7.png", "largfish/8.png", "largfish/9.png",
-      "largfish/10.png", "largfish/11.png", "largfish/12.png", "largfish/13.png", "largfish/14.png",
-      "largfish/15.png", "largfish/16.png", "largfish/17.png", "largfish/18.png", "largfish/19.png",
-      "largfish/20.png"],
+    imageFish: ["imgs/largfish/1.png", "imgs/largfish/2.png", "imgs/largfish/3.png", "imgs/largfish/4.png",
+      "imgs/largfish/5.png", "imgs/largfish/6.png", "imgs/largfish/7.png", "imgs/largfish/8.png", "imgs/largfish/9.png",
+      "imgs/largfish/10.png", "imgs/largfish/11.png", "imgs/largfish/12.png", "imgs/largfish/13.png", "imgs/largfish/14.png",
+      "imgs/largfish/15.png", "imgs/largfish/16.png", "imgs/largfish/17.png", "imgs/largfish/18.png", "imgs/largfish/19.png",
+      "imgs/largfish/20.png"],
     radius: 50,
     spriteWidth: 500,
     spriteHeight: 450,
@@ -340,7 +340,7 @@ const handleEnemies = () => {
 // Bubbles
 const bubblesArray = [];
 const bubble = new Image();
-bubble.src = 'fx_bubble_d0.png';
+bubble.src = 'imgs/fx_bubble_d0.png';
 class Bubble {
   constructor() {
     this.x = Math.random() * canvas.width;
