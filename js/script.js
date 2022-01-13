@@ -3,11 +3,10 @@ const ctx = canvas.getContext("2d");
 canvas.width = document.body.clientWidth; //document.width is obsolete
 canvas.height = document.body.clientHeight; //document.height is obsolete
 // Sound
-if(localStorage.getItem("Status")==0){
-  localStorage.setItem('lives', 5 );
-  localStorage.setItem('score', 0 );
-  localStorage.setItem('stateLevel', 1 );
-
+if (localStorage.getItem("Status") == 0) {
+  localStorage.setItem("lives", 5);
+  localStorage.setItem("score", 0);
+  localStorage.setItem("stateLevel", 1);
 }
 let score;
 score = localStorage.getItem("score");
@@ -18,7 +17,6 @@ stateLevel = localStorage.getItem("stateLevel");
 let stateGame = 1; //   0 >> Game Over      1 >> Continue Game
 let audio;
 
-
 function gameState(value) {
   // 0 >> Change Lives
 
@@ -26,12 +24,13 @@ function gameState(value) {
     myLives--;
 
     if (myLives) {
-      localStorage.setItem('lives', myLives );
+      localStorage.setItem("lives", myLives);
 
       player.eaten = true;
-      setTimeout(() => { player.eaten = false; }, 1000);
-    }
-    else {
+      setTimeout(() => {
+        player.eaten = false;
+      }, 1000);
+    } else {
       stateGame = 0;
     }
   }
@@ -39,48 +38,46 @@ function gameState(value) {
   // 1 >> Change Score
   else if (value == 1) {
     score++;
-    localStorage.setItem('score', score );
+    localStorage.setItem("score", score);
 
     // Next Level
-    if ((score % 5 == 0)) {
-      if(stateLevel<3){
-      stateLevel++;
-      localStorage.setItem('stateLevel', stateLevel );
-}
+    if (score % 5 == 0) {
+      if (stateLevel < 3) {
+        stateLevel++;
+        localStorage.setItem("stateLevel", stateLevel);
+      }
     }
-
   }
 }
 
-
 const sound = () => {
-  audio = document.createElement("audio")
-  audio.setAttribute("src", "other/GameSound.mp3")
-  audio.setAttribute("controls", "controls")
-}
-sound()
+  audio = document.createElement("audio");
+  audio.setAttribute("src", "other/GameSound.mp3");
+  audio.setAttribute("controls", "controls");
+};
+sound();
 // audio.play()
 // audio.loop()
 //player
 const mouse = {
   x: canvas.width / 2,
   y: canvas.height / 2,
-  click: false
-}
-canvas.addEventListener('mouseup', () => {
+  click: false,
+};
+canvas.addEventListener("mouseup", () => {
   mouse.click = false;
-})
+});
 
-canvas.addEventListener('mousedown', (e) => {
+canvas.addEventListener("mousedown", (e) => {
   mouse.click = true;
   mouse.x = e.offsetX;
   mouse.y = e.offsetY;
   // console.log(mouse.x,mouse.y);
 });
 const playerLeft = new Image();
-playerLeft.src = 'imgs/fish_swim_left.png';
+playerLeft.src = "imgs/fish_swim_left.png";
 const playerRight = new Image();
-playerRight.src = 'imgs/fish_swim_right.png';
+playerRight.src = "imgs/fish_swim_right.png";
 
 class Player {
   constructor() {
@@ -114,20 +111,18 @@ class Player {
       this.Height = this.spirtheight / 3;
       this.size = 2.5;
       this.radius = 65;
-
     }
     if (stateLevel == 3) {
       this.Width = this.spirteWidth / 2;
       this.Height = this.spirtheight / 2;
       this.size = 3.5;
       this.radius = 90;
-
     }
   }
   draw() {
     if (mouse.click) {
       ctx.lineWidth = 0.2;
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0)';
+      ctx.strokeStyle = "rgba(255, 255, 255, 0)";
       ctx.beginPath();
       ctx.moveTo(this.x, this.y);
       ctx.lineTo(mouse.x, mouse.y);
@@ -140,34 +135,45 @@ class Player {
     ctx.closePath();
     // ctx.fillRect(this.x,this.y,this.radius,10);
     if (stateGame == 0) {
-      localStorage.setItem('stateLevel', 1 );
-      localStorage.setItem('score', 0 );
-      localStorage.setItem('lives', 5 );
+      localStorage.setItem("stateLevel", 1);
+      localStorage.setItem("score", 0);
+      localStorage.setItem("lives", 5);
 
       ctx.clearRect(0, 0, canvas.Width, canvas.Width);
       ctx.font = "100px Comic Sans MS";
       ctx.fillStyle = "red";
       ctx.textAlign = "center";
       ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
-    }
-    else if (!this.eaten) {
+    } else if (!this.eaten) {
       if (this.x >= mouse.x) {
-        ctx.drawImage(playerLeft, this.frameX * this.spirteWidth, this.frameY * this.spirtheight, this.spirteWidth, this.spirtheight, this.x - (4 / 3 * this.radius), this.y - (3 / 4 * this.radius), this.Width, this.Height);
+        ctx.drawImage(
+          playerLeft,
+          this.frameX * this.spirteWidth,
+          this.frameY * this.spirtheight,
+          this.spirteWidth,
+          this.spirtheight,
+          this.x - (4 / 3) * this.radius,
+          this.y - (3 / 4) * this.radius,
+          this.Width,
+          this.Height
+        );
+      } else {
+        ctx.drawImage(
+          playerRight,
+          this.frameX * this.spirteWidth,
+          this.frameY * this.spirtheight,
+          this.spirteWidth,
+          this.spirtheight,
+          this.x - (4 / 3) * this.radius,
+          this.y - (3 / 4) * this.radius,
+          this.Width,
+          this.Height
+        );
       }
-      else {
-        ctx.drawImage(playerRight, this.frameX * this.spirteWidth, this.frameY * this.spirtheight, this.spirteWidth, this.spirtheight, this.x - (4 / 3 * this.radius), this.y - (3 / 4 * this.radius), this.Width, this.Height);
-      }
-    }
-
-    else {
-
+    } else {
       ctx.clearRect(0, 0, canvas.Width, canvas.Width);
-
     }
-
   }
-
-
 }
 //smallFishEnemies
 //mediumFishEnemies
@@ -177,11 +183,31 @@ const typeOfEnemies = [
   {
     id: 1,
     type: "small",
-    imageFish: ["imgs/smallfish/1.png", "imgs/smallfish/2.png", "imgs/smallfish/3.png", "imgs/smallfish/4.png",
-      "imgs/smallfish/5.png", "imgs/smallfish/6.png", "imgs/smallfish/7.png", "imgs/smallfish/8.png", "imgs/smallfish/9.png",
-      "imgs/smallfish/10.png", "imgs/smallfish/11.png", "imgs/smallfish/12.png", "imgs/smallfish/13.png", "imgs/smallfish/14.png",
-      "imgs/smallfish/15.png", "imgs/smallfish/16.png", "imgs/smallfish/17.png", "imgs/smallfish/18.png", "imgs/smallfish/19.png",
-      "imgs/smallfish/20.png", "imgs/smallfish/21.png", "imgs/smallfish/22.png", "imgs/smallfish/23.png"],
+    imageFish: [
+      "imgs/smallfish/1.png",
+      "imgs/smallfish/2.png",
+      "imgs/smallfish/3.png",
+      "imgs/smallfish/4.png",
+      "imgs/smallfish/5.png",
+      "imgs/smallfish/6.png",
+      "imgs/smallfish/7.png",
+      "imgs/smallfish/8.png",
+      "imgs/smallfish/9.png",
+      "imgs/smallfish/10.png",
+      "imgs/smallfish/11.png",
+      "imgs/smallfish/12.png",
+      "imgs/smallfish/13.png",
+      "imgs/smallfish/14.png",
+      "imgs/smallfish/15.png",
+      "imgs/smallfish/16.png",
+      "imgs/smallfish/17.png",
+      "imgs/smallfish/18.png",
+      "imgs/smallfish/19.png",
+      "imgs/smallfish/20.png",
+      "imgs/smallfish/21.png",
+      "imgs/smallfish/22.png",
+      "imgs/smallfish/23.png",
+    ],
     radius: 20,
     spriteWidth: 600,
     spriteHeight: 300,
@@ -189,13 +215,25 @@ const typeOfEnemies = [
     height: 100,
     xConstant: 50,
     yConstant: 60,
+    apperanceForword: true,
   },
   {
     id: 2,
     type: "medium",
-    imageFish: ["imgs/mediumfish/1.png", "imgs/mediumfish/2.png", "imgs/mediumfish/3.png", "imgs/mediumfish/4.png",
-      "imgs/mediumfish/5.png", "imgs/mediumfish/6.png", "imgs/mediumfish/7.png", "imgs/mediumfish/8.png", "imgs/mediumfish/9.png",
-      "imgs/mediumfish/10.png", "imgs/mediumfish/11.png", "imgs/mediumfish/12.png"],
+    imageFish: [
+      "imgs/mediumfish/1.png",
+      "imgs/mediumfish/2.png",
+      "imgs/mediumfish/3.png",
+      "imgs/mediumfish/4.png",
+      "imgs/mediumfish/5.png",
+      "imgs/mediumfish/6.png",
+      "imgs/mediumfish/7.png",
+      "imgs/mediumfish/8.png",
+      "imgs/mediumfish/9.png",
+      "imgs/mediumfish/10.png",
+      "imgs/mediumfish/11.png",
+      "imgs/mediumfish/12.png",
+    ],
     radius: 35,
     spriteWidth: 350,
     spriteHeight: 220,
@@ -203,15 +241,33 @@ const typeOfEnemies = [
     height: 190,
     xConstant: 65,
     yConstant: 65,
+    apperanceForword: true,
   },
   {
     id: 3,
     type: "larg",
-    imageFish: ["imgs/largfish/1.png", "imgs/largfish/2.png", "imgs/largfish/3.png", "imgs/largfish/4.png",
-      "imgs/largfish/5.png", "imgs/largfish/6.png", "imgs/largfish/7.png", "imgs/largfish/8.png", "imgs/largfish/9.png",
-      "imgs/largfish/10.png", "imgs/largfish/11.png", "imgs/largfish/12.png", "imgs/largfish/13.png", "imgs/largfish/14.png",
-      "imgs/largfish/15.png", "imgs/largfish/16.png", "imgs/largfish/17.png", "imgs/largfish/18.png", "imgs/largfish/19.png",
-      "imgs/largfish/20.png"],
+    imageFish: [
+      "imgs/largfish/1.png",
+      "imgs/largfish/2.png",
+      "imgs/largfish/3.png",
+      "imgs/largfish/4.png",
+      "imgs/largfish/5.png",
+      "imgs/largfish/6.png",
+      "imgs/largfish/7.png",
+      "imgs/largfish/8.png",
+      "imgs/largfish/9.png",
+      "imgs/largfish/10.png",
+      "imgs/largfish/11.png",
+      "imgs/largfish/12.png",
+      "imgs/largfish/13.png",
+      "imgs/largfish/14.png",
+      "imgs/largfish/15.png",
+      "imgs/largfish/16.png",
+      "imgs/largfish/17.png",
+      "imgs/largfish/18.png",
+      "imgs/largfish/19.png",
+      "imgs/largfish/20.png",
+    ],
     radius: 50,
     spriteWidth: 500,
     spriteHeight: 450,
@@ -219,9 +275,9 @@ const typeOfEnemies = [
     height: 210,
     xConstant: 85,
     yConstant: 90,
+    apperanceForword: true,
   },
 ];
-
 
 let gameFrame = 0;
 
@@ -230,7 +286,9 @@ const enemies = [];
 class FishEnemies {
   constructor({ ...propertiesFish }) {
     this.id = propertiesFish.id;
-    this.x = canvas.width * (1 + Math.random());
+    this.x = propertiesFish.apperanceForword
+      ? -100 + (1 + Math.random())
+      : canvas.width * (1 + Math.random());
     this.y = Math.random() * canvas.height;
     this.radius = propertiesFish.radius;
     this.type = propertiesFish.type;
@@ -249,13 +307,16 @@ class FishEnemies {
     this.xConstant = propertiesFish.xConstant;
     this.yConstant = propertiesFish.yConstant;
 
+    this.apperanceForword = propertiesFish.apperanceForword;
   }
 
   update() {
-    this.x += this.speed;
-
+    if (this.apperanceForword) {
+      this.x -= this.speed;
+    } else {
+      this.x += this.speed;
+    }
     this.counted = false;
-
   }
 
   draw() {
@@ -263,22 +324,45 @@ class FishEnemies {
     // if (gameFrame % 10 == 0) {
     img.src = this.imageFish[this.frame];
 
-    this.frame = this.imageFish.length == this.frame + 1 ? 0 : ++this.frame
+    this.frame = this.imageFish.length == this.frame + 1 ? 0 : ++this.frame;
     // }
     if (!stateGame) {
       ctx.clearRect(0, 0, canvas.Width, canvas.Width);
     } else {
-      ctx.drawImage(
-        img,
-        0,
-        0,
-        this.spriteWidth,
-        this.spriteHeight,
-        this.x - this.xConstant,
-        this.y - this.yConstant,
-        this.width,
-        this.height
-      );
+      if (this.apperanceForword) {
+        ctx.translate(this.x, this.y);
+
+        ctx.scale(-1, 1);
+
+        // draw the img
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          this.spriteWidth,
+          this.spriteHeight,
+          -this.xConstant,
+          -this.yConstant,
+          this.width,
+          this.height
+        );
+
+        // always clean up -- reset transformations to default
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+      } else {
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          this.spriteWidth,
+          this.spriteHeight,
+          this.x - this.xConstant,
+          this.y - this.yConstant,
+          this.width,
+          this.height
+        );
+      }
     }
   }
 }
@@ -292,21 +376,15 @@ const handleEnemies = () => {
     if (enemies[i].distance2 < enemies[i].radius + player.radius) {
       if (!player.eaten) {
         if (!enemies[i].counted) {
-
           enemies[i].counted = true;
           if (enemies[i].id > player.size) {
-
             player.x = mouse.x = canvas.width / 2;
             player.y = mouse.y = canvas.height / 2;
             gameState(0);
-          }
-          else {
+          } else {
             enemies.splice(i, 1);
             gameState(1);
-
           }
-
-
         }
       }
     }
@@ -329,10 +407,7 @@ const handleEnemies = () => {
           enemies.splice(removeWhichIndex, 1);
         }
       }
-
     }
-
-
   }
 
   for (let i = 0; i < enemies.length; i++) {
@@ -341,23 +416,28 @@ const handleEnemies = () => {
   }
   if (gameFrame % 70 == 0) {
     let chooseFishToInsert = Math.floor(Math.random() * (3 - 0)) + 0;
-    let bigFishs = enemies.filter((fish) =>  fish.id == 3 ).length;
-    let mediumFishs = enemies.filter((fish) => fish.id == 2 ).length;
+    let bigFishs = enemies.filter((fish) => fish.id == 3).length;
+    let mediumFishs = enemies.filter((fish) => fish.id == 2).length;
 
-    if  (bigFishs >= 3 && chooseFishToInsert == 2) {
+    if (bigFishs >= 3 && chooseFishToInsert == 2) {
       chooseFishToInsert = Math.floor(Math.random() * (2 - 0)) + 0;
-    }
-    else if  (mediumFishs > 4 && chooseFishToInsert == 1) {
+    } else if (mediumFishs > 4 && chooseFishToInsert == 1) {
       chooseFishToInsert = 0;
     }
-    enemies.push(new FishEnemies({ ...typeOfEnemies[chooseFishToInsert] }));
+    let apperanceForword = Math.floor(Math.random() * (2 - 0)) + 0 == 1;
+    enemies.push(
+      new FishEnemies({
+        ...typeOfEnemies[chooseFishToInsert],
+        apperanceForword: apperanceForword,
+      })
+    );
   }
 };
 
 // Bubbles
 const bubblesArray = [];
 const bubble = new Image();
-bubble.src = 'imgs/fx_bubble_d0.png';
+bubble.src = "imgs/fx_bubble_d0.png";
 class Bubble {
   constructor() {
     this.x = Math.random() * canvas.width;
@@ -370,12 +450,20 @@ class Bubble {
     this.spriteHeight = 100;
   }
   update() {
-    this.y -= this.speed
-
+    this.y -= this.speed;
   }
   draw() {
-
-    ctx.drawImage(bubble, 0, 0, this.spriteWidth, this.spriteHeight, this.x - 68, this.y - 68, this.spriteWidth * 1.5, this.spriteHeight * 1.5);
+    ctx.drawImage(
+      bubble,
+      0,
+      0,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.x - 68,
+      this.y - 68,
+      this.spriteWidth * 1.5,
+      this.spriteHeight * 1.5
+    );
   }
 }
 function handleBubbles() {
@@ -384,7 +472,6 @@ function handleBubbles() {
     if (bubblesArray[i].y < -25) {
       bubblesArray.splice(i, 1);
       // console.log(bubblesArray.length)
-
     }
   }
   for (let i = 0; i < bubblesArray.length; i++) {
@@ -394,8 +481,7 @@ function handleBubbles() {
   if (gameFrame % 50 == 0) {
     bubblesArray.push(new Bubble());
   }
-};
-
+}
 
 const player = new Player();
 const initEnemies = () => {
