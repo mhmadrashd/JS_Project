@@ -1,10 +1,25 @@
 
 let progressSpans = document.querySelectorAll(".the-progress span");
 let section = document.querySelector(".scores");
+let Play = document.querySelector("#btnPlay");
+let Continue = document.querySelector("#btnContinue");
+
 
 let nums = document.querySelectorAll(".stats .number");
 let statsSection = document.querySelector(".stats");
 let started = false; // Function Started ? No
+
+
+Continue.addEventListener("click",()=>{
+console.log("here");
+  localStorage.setItem('Status', 1 );
+
+});
+Play.addEventListener("click",()=>{
+  localStorage.setItem('Status', 0 );
+
+});
+
 
 window.onscroll = function () {
   // Scores Animate Width
