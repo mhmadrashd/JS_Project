@@ -1,6 +1,11 @@
 const livesContainer = document.getElementById("lives");
 const heart = document.getElementsByClassName("live");
 
+const gameOverContainer = document.getElementsByClassName("game-over")[0];
+const homeButton = document.getElementById("home");
+const playAgainButton = document.getElementById("play-again");
+
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = document.body.clientWidth; //document.width is obsolete
@@ -109,26 +114,39 @@ canvas.addEventListener("mousedown", (e) => {
   mouse.y = e.offsetY;
   // console.log(mouse.x,mouse.y);
 });
-function Buttons() {
-  if (
-    mouse.x > canvas.width / 2 - 100 &&
-    mouse.x < canvas.width / 2 + 100 &&
-    mouse.y > canvas.height / 2 + 20 &&
-    mouse.y < canvas.height / 2 + 100
-  ) {
-    localStorage.setItem("Status", 0);
-    window.location.reload();
-  }
-  if (
-    mouse.x > canvas.width / 2 - 100 &&
-    mouse.x < canvas.width / 2 + 100 &&
-    mouse.y > canvas.height / 2 + 120 &&
-    mouse.y < canvas.height / 2 + 200
-  ) {
-    localStorage.setItem("Status", 0);
-    window.location.replace("index.html");
-  }
+
+homeButton.onclick = () => {
+  localStorage.setItem("Status", 0);
+  window.location.replace("index.html");
 }
+
+playAgainButton.onclick = () => {
+  localStorage.setItem("Status", 0);
+  window.location.reload();
+}
+// function Buttons() {
+//   if (
+//     mouse.x > canvas.width / 2 - 100 &&
+//     mouse.x < canvas.width / 2 + 100 &&
+//     mouse.y > canvas.height / 2 + 20 &&
+//     mouse.y < canvas.height / 2 + 100
+//   ) {
+//     localStorage.setItem("Status", 0);
+//     window.location.reload();
+//   }
+//   if (
+//     mouse.x > canvas.width / 2 - 100 &&
+//     mouse.x < canvas.width / 2 + 100 &&
+//     mouse.y > canvas.height / 2 + 120 &&
+//     mouse.y < canvas.height / 2 + 200
+//   ) {
+//     localStorage.setItem("Status", 0);
+//     window.location.replace("index.html");
+//   }
+// }
+
+
+
 const playerLeft = new Image();
 playerLeft.src = "imgs/fish_swim_left.png";
 const playerRight = new Image();
@@ -209,39 +227,40 @@ class Player {
 
       ctx.clearRect(0, 0, canvas.Width, canvas.Width);
       handleLives();
-      ctx.font = "100px Comic Sans MS";
-      ctx.fillStyle = "red";
-      ctx.textAlign = "center";
-      ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = "#000000";
-      ctx.fillStyle = "#32a852";
-      ctx.fillRect(canvas.width / 2 - 100, canvas.height / 2 + 20, 200, 80);
-      ctx.font = "20px Georgia";
-      ctx.textAlign = "center";
+      gameOverContainer.style.display = "block";
+      // ctx.font = "100px Comic Sans MS";
+      // ctx.fillStyle = "red";
+      // ctx.textAlign = "center";
+      // ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+      // ctx.lineWidth = 4;
+      // ctx.strokeStyle = "#000000";
+      // ctx.fillStyle = "#32a852";
+      // ctx.fillRect(canvas.width / 2 - 100, canvas.height / 2 + 20, 200, 80);
+      // ctx.font = "20px Georgia";
+      // ctx.textAlign = "center";
 
-      ctx.fillStyle = "#000000";
-      var rectHeight = 80;
-      var rectWidth = 200;
-      var rectX = canvas.width / 2 - 100;
-      var rectY = canvas.height / 2 + 20;
-      ctx.fillText(
-        "Play Again!",
-        rectX + rectWidth / 2,
-        rectY + rectHeight / 2
-      );
-      ctx.strokeStyle = "#000000";
-      ctx.fillStyle = "#a84432";
-      ctx.fillRect(canvas.width / 2 - 100, canvas.height / 2 + 120, 200, 80);
-      ctx.font = "20px Georgia";
-      ctx.textAlign = "center";
-      ctx.fillStyle = "#000000";
-      var rectHeight2 = 80;
-      var rectWidth2 = 200;
-      var rectX2 = canvas.width / 2 - 100;
-      var rectY2 = canvas.height / 2 + 120;
-      ctx.fillText("Home!", rectX2 + rectWidth2 / 2, rectY2 + rectHeight2 / 2);
-      canvas.addEventListener("click", Buttons);
+      // ctx.fillStyle = "#000000";
+      // var rectHeight = 80;
+      // var rectWidth = 200;
+      // var rectX = canvas.width / 2 - 100;
+      // var rectY = canvas.height / 2 + 20;
+      // ctx.fillText(
+      //   "Play Again!",
+      //   rectX + rectWidth / 2,
+      //   rectY + rectHeight / 2
+      // );
+      // ctx.strokeStyle = "#000000";
+      // ctx.fillStyle = "#a84432";
+      // ctx.fillRect(canvas.width / 2 - 100, canvas.height / 2 + 120, 200, 80);
+      // ctx.font = "20px Georgia";
+      // ctx.textAlign = "center";
+      // ctx.fillStyle = "#000000";
+      // var rectHeight2 = 80;
+      // var rectWidth2 = 200;
+      // var rectX2 = canvas.width / 2 - 100;
+      // var rectY2 = canvas.height / 2 + 120;
+      // ctx.fillText("Home!", rectX2 + rectWidth2 / 2, rectY2 + rectHeight2 / 2);
+      // canvas.addEventListener("click", Buttons);
     } else if (!this.eaten) {
       if (this.x >= mouse.x) {
         ctx.drawImage(
