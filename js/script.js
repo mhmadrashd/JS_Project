@@ -390,7 +390,10 @@ const handleEnemies = () => {
     }
   }
   for (let i = 0; i < enemies.length; i++) {
-    if (enemies[i].x < -100) {
+    if (enemies[i].x < -100 && !enemies[i].apperanceForword ) {
+      enemies.splice(i, 1);
+    }
+    if (enemies[i].x > canvas.width+100 && enemies[i].apperanceForword ) {
       enemies.splice(i, 1);
     }
   }
