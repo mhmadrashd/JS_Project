@@ -78,7 +78,7 @@ function gameState(value) {
       stateGame = 0;
     }
   }
- 
+
   // 1 >> Change Score
   else if (value == 1) {
     score++;
@@ -244,7 +244,7 @@ class Player {
       ctx.clearRect(0, 0, canvas.Width, canvas.Width);
       handleLives();
       gameOverContainer.style.display = "block";
-      
+
     } else if (!this.eaten) {
       if (this.x >= mouse.x) {
         ctx.drawImage(
