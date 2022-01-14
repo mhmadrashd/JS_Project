@@ -16,6 +16,7 @@ let stateLevel;
 stateLevel = localStorage.getItem("stateLevel");
 let stateGame = 1; //   0 >> Game Over      1 >> Continue Game
 let audio;
+let audioEat;
 
 function gameState(value) {
   // 0 >> Change Lives
@@ -55,7 +56,19 @@ const sound = () => {
   audio.setAttribute("src", "other/GameSound.mp3");
   audio.setAttribute("controls", "controls");
 };
+const soundEat = () => {
+  audioEat = document.createElement("audio");
+  audioEat.setAttribute("src", "other/eating.mp3");
+  audioEat.setAttribute("controls", "controls");
+};
+
+const soundEatPlay = () => {
+  audioEat.currentTime =2;
+  audioEat.play()
+};
+
 sound();
+soundEat();
 // audio.play()
 // audio.loop()
 //player
@@ -282,6 +295,7 @@ const typeOfEnemies = [
 let gameFrame = 0;
 
 const enemies = [];
+const enemiesDie = [];
 
 class FishEnemies {
   constructor({ ...propertiesFish }) {
@@ -308,6 +322,7 @@ class FishEnemies {
     this.yConstant = propertiesFish.yConstant;
 
     this.apperanceForword = propertiesFish.apperanceForword;
+    this.toDie = 1;
   }
 
   update() {
@@ -317,6 +332,32 @@ class FishEnemies {
       this.x += this.speed;
     }
     this.counted = false;
+  }
+
+  updateWhenDie() {
+    this.toDie -= 0.1;
+  }
+
+  drawWhenDie() {
+    const img = new Image();
+    // if (gameFrame % 10 == 0) {
+    img.src = this.imageFish[this.frame];
+    ctx.translate(this.x, this.y);
+    ctx.scale(-this.toDie, this.toDie);
+    ctx.drawImage(
+      img,
+      0,
+      0,
+      this.spriteWidth,
+      this.spriteHeight,
+      -this.xConstant,
+      -this.yConstant,
+      this.width,
+      this.height
+    );
+
+    // always clean up -- reset transformations to default
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 
   draw() {
@@ -333,7 +374,6 @@ class FishEnemies {
         ctx.translate(this.x, this.y);
 
         ctx.scale(-1, 1);
-
         // draw the img
 
         ctx.drawImage(
@@ -382,6 +422,8 @@ const handleEnemies = () => {
             player.y = mouse.y = canvas.height / 2;
             gameState(0);
           } else {
+            soundEatPlay();
+            enemiesDie.push(enemies[i]);
             enemies.splice(i, 1);
             gameState(1);
           }
@@ -390,13 +432,20 @@ const handleEnemies = () => {
     }
   }
   for (let i = 0; i < enemies.length; i++) {
-    if (enemies[i].x < -100 && !enemies[i].apperanceForword ) {
+    if (enemies[i].x < -100 && !enemies[i].apperanceForword) {
       enemies.splice(i, 1);
     }
-    if (enemies[i].x > canvas.width+100 && enemies[i].apperanceForword ) {
+    if (enemies[i].x > canvas.width + 100 && enemies[i].apperanceForword) {
       enemies.splice(i, 1);
     }
   }
+
+  for (let i = 0; i < enemiesDie.length; i++) {
+    if (enemiesDie[i].toDie < 0) {
+      enemiesDie.splice(i, 1);
+    }
+  }
+
   for (let i = 0; i < enemies.length; i++) {
     for (let j = i + 1; j < enemies.length; j++) {
       let dx = enemies[i].x - enemies[j].x;
@@ -407,6 +456,8 @@ const handleEnemies = () => {
         if (enemies[i].id != enemies[j].id) {
           // console.log("eat")
           let removeWhichIndex = enemies[i].id > enemies[j].id ? j : i;
+          soundEatPlay()
+          enemiesDie.push(enemies[removeWhichIndex]);
           enemies.splice(removeWhichIndex, 1);
         }
       }
@@ -417,6 +468,12 @@ const handleEnemies = () => {
     enemies[i].update();
     enemies[i].draw();
   }
+
+  for (let k = 0; k < enemiesDie.length; k++) {
+    enemiesDie[k].updateWhenDie();
+    enemiesDie[k].drawWhenDie();
+  }
+
   if (gameFrame % 70 == 0) {
     let chooseFishToInsert = Math.floor(Math.random() * (3 - 0)) + 0;
     let bigFishs = enemies.filter((fish) => fish.id == 3).length;
