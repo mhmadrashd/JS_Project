@@ -11,9 +11,11 @@ const ctx = canvas.getContext("2d");
 canvas.width = document.body.clientWidth; //document.width is obsolete
 canvas.height = document.body.clientHeight; //document.height is obsolet
 // Sound
+if(!localStorage.getItem("firstScore")){
 localStorage.setItem("firstScore", 0);
-localStorage.setItem("SecondScore", 0);
+localStorage.setItem("secondScore", 0);
 localStorage.setItem("thirdScore", 0);
+}
 if (localStorage.getItem("Status") == 0) {
   localStorage.setItem("lives", 5);
   localStorage.setItem("score", 0);
@@ -34,7 +36,7 @@ let pause = false;
 const pauseAndPlayImg = document.getElementById("pauseAndPlayImg");
 
 
-//  games 
+//  games
 const handleLives = () => {
   // livesContainer.innerHTML = "";
   if(myLives !=5){
@@ -64,8 +66,7 @@ function gameState(value) {
   // 1 >> Change Score
   else if (value == 1) {
     score++;
-    localStorage.setItem("score", score);
-
+      localStorage.setItem("score", score);
     // Next Level
     if (score % 10 == 0) {
       if (stateLevel < 3) {
@@ -207,6 +208,19 @@ class Player {
     ctx.closePath();
     // ctx.fillRect(this.x,this.y,this.radius,10);
     if (stateGame == 0) {
+
+  if(score>localStorage.getItem("firstScore")){
+        localStorage.setItem("thirdScore", localStorage.getItem("secondScore"));
+    localStorage.setItem("secondScore", localStorage.getItem("firstScore"));
+    localStorage.setItem("firstScore", score);
+  }
+  else if(score>localStorage.getItem("secondScore")){
+    localStorage.setItem("thirdScore", localStorage.getItem("secondScore"));
+    localStorage.setItem("secondScore", score);
+  }
+  else if(score>localStorage.getItem("thirdScore")){
+    localStorage.setItem("thirdScore", score);
+  }
       localStorage.setItem("stateLevel", 1);
       localStorage.setItem("score", 0);
       localStorage.setItem("lives", 5);

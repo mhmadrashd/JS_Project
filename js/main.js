@@ -3,15 +3,21 @@ let progressSpans = document.querySelectorAll(".the-progress span");
 let section = document.querySelector(".scores");
 let Play = document.querySelector("#btnPlay");
 let Continue = document.querySelector("#btnContinue");
-
-
+let firstScore = document.querySelectorAll(".firstScore");
+let secondScore = document.querySelectorAll(".secondScore");
+let thirdScore = document.querySelectorAll(".thirdScore");
 let nums = document.querySelectorAll(".stats .number");
 let statsSection = document.querySelector(".stats");
 let started = false; // Function Started ? No
+firstScore[0].textContent =localStorage.getItem("firstScore");
+secondScore[0].textContent =localStorage.getItem("secondScore");
+thirdScore[0].textContent =localStorage.getItem("thirdScore");
 
-
+firstScore[1].dataset.width= (localStorage.getItem("firstScore")/localStorage.getItem("firstScore")*100).toString()+  "%";
+secondScore[1].dataset.width= (localStorage.getItem("secondScore")/localStorage.getItem("firstScore")*100).toString()+  "%";
+thirdScore[1].dataset.width= (localStorage.getItem("thirdScore")/localStorage.getItem("firstScore")*100).toString()+  "%";
+console.log(firstScore[1].dataset.width);
 Continue.addEventListener("click",()=>{
-console.log("here");
   localStorage.setItem('Status', 1 );
 
 });
