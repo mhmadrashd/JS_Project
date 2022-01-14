@@ -18,6 +18,10 @@ let stateGame = 1; //   0 >> Game Over      1 >> Continue Game
 let audio;
 let audioEat;
 
+// pause game
+let pause = false;
+const pauseAndPlayImg = document.getElementById("pauseAndPlayImg")
+
 function gameState(value) {
   // 0 >> Change Lives
 
@@ -63,8 +67,8 @@ const soundEat = () => {
 };
 
 const soundEatPlay = () => {
-  audioEat.currentTime =2;
-  audioEat.play()
+  audioEat.currentTime = 2;
+  audioEat.play();
 };
 
 sound();
@@ -456,7 +460,7 @@ const handleEnemies = () => {
         if (enemies[i].id != enemies[j].id) {
           // console.log("eat")
           let removeWhichIndex = enemies[i].id > enemies[j].id ? j : i;
-          soundEatPlay()
+          soundEatPlay();
           enemiesDie.push(enemies[removeWhichIndex]);
           enemies.splice(removeWhichIndex, 1);
         }
@@ -544,15 +548,35 @@ function handleBubbles() {
 }
 
 const player = new Player();
+
+const addPauseAndPlay = () => {
+  if (pause) {
+    pauseAndPlayImg.src="imgs/play.png"
+
+  } else {
+    pauseAndPlayImg.src="imgs/pause.png"
+  }
+};
+
+pauseAndPlayImg.addEventListener("click", (e) => {
+  pause = !pause;
+  if (!pause) {
+    initEnemies();
+  }
+  console.log(e)
+});
+
 const initEnemies = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  addPauseAndPlay();
   handleBubbles();
   handleEnemies();
   gameFrame++;
 
   player.update();
   player.draw();
-  if (stateGame) {
+
+  if (stateGame && !pause) {
     requestAnimationFrame(initEnemies);
   }
 };
