@@ -5,19 +5,25 @@
 }
 body {
   width: 100vw;
-  height: 100vh;
+  height: 93vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
+  flex-flow: column;
   /* background-color: linear-gradient(to bottom, lightblue, darkblue); */
-}
-#canvas {
-
-
-  background: linear-gradient(to bottom, rgb(39, 141, 175), rgb(5, 5, 58));
   background-image: url(../imgs/background.png);
-  background-size:     cover;
-  background-repeat:   no-repeat;
-  background-position: center center;
+  background-size: cover;
+}
+.setting {
+  display: flex;
+  justify-content:end;
+    padding: 10px 10px 0 10px;
+    /* padding: ; */
 
+}
+
+#canvas {
+  /* background: linear-gradient(to bottom, rgb(39, 141, 175), rgb(5, 5, 58)); */
+  background-repeat: no-repeat;
+  background-position: center center;
 }
