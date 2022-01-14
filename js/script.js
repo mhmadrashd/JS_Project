@@ -1,3 +1,6 @@
+const livesContainer = document.getElementById("lives");
+const heart = document.getElementsByClassName("live");
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = document.body.clientWidth; //document.width is obsolete
@@ -14,7 +17,7 @@ if (localStorage.getItem("Status") == 0) {
 let score;
 score = localStorage.getItem("score");
 let myLives;
-myLives = localStorage.getItem("lives");
+myLives = localStorage.getItem("lives") || 5;
 let stateLevel;
 stateLevel = localStorage.getItem("stateLevel");
 let stateGame = 1; //   0 >> Game Over      1 >> Continue Game
@@ -23,7 +26,17 @@ let audioEat;
 
 // pause game
 let pause = false;
-const pauseAndPlayImg = document.getElementById("pauseAndPlayImg")
+const pauseAndPlayImg = document.getElementById("pauseAndPlayImg");
+
+
+//  games 
+const handleLives = () => {
+  // livesContainer.innerHTML = "";
+  if(myLives !=5){
+  heart[myLives].src = "imgs/heart-outline.png"
+  }
+
+};
 
 function gameState(value) {
   // 0 >> Change Lives
@@ -75,6 +88,8 @@ const soundEatPlay = () => {
 
 sound();
 soundEat();
+handleLives();
+
 // audio.play()
 // audio.loop()
 //player
@@ -93,16 +108,24 @@ canvas.addEventListener("mousedown", (e) => {
   mouse.y = e.offsetY;
   // console.log(mouse.x,mouse.y);
 });
-function Buttons(){
-  if(mouse.x> (canvas.width / 2)-100 && mouse.x < (canvas.width / 2)+100 && mouse.y > (canvas.height / 2)+20&& mouse.y < (canvas.height / 2)+100 ){
-localStorage.setItem("Status",0);
+function Buttons() {
+  if (
+    mouse.x > canvas.width / 2 - 100 &&
+    mouse.x < canvas.width / 2 + 100 &&
+    mouse.y > canvas.height / 2 + 20 &&
+    mouse.y < canvas.height / 2 + 100
+  ) {
+    localStorage.setItem("Status", 0);
     window.location.reload();
-
   }
-  if(mouse.x> (canvas.width / 2)-100 && mouse.x < (canvas.width / 2)+100 && mouse.y > (canvas.height / 2)+120&& mouse.y < (canvas.height / 2)+200 ){
-localStorage.setItem("Status",0);
-window.location.replace("index.html");
-
+  if (
+    mouse.x > canvas.width / 2 - 100 &&
+    mouse.x < canvas.width / 2 + 100 &&
+    mouse.y > canvas.height / 2 + 120 &&
+    mouse.y < canvas.height / 2 + 200
+  ) {
+    localStorage.setItem("Status", 0);
+    window.location.replace("index.html");
   }
 }
 const playerLeft = new Image();
@@ -171,35 +194,40 @@ class Player {
       localStorage.setItem("lives", 5);
 
       ctx.clearRect(0, 0, canvas.Width, canvas.Width);
+      handleLives();
       ctx.font = "100px Comic Sans MS";
       ctx.fillStyle = "red";
       ctx.textAlign = "center";
       ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
       ctx.lineWidth = 4;
-ctx.strokeStyle = "#000000";
-ctx.fillStyle = "#32a852";
-  ctx.fillRect((canvas.width / 2)-100, (canvas.height / 2)+20,200, 80);
-ctx.font="20px Georgia";
-ctx.textAlign="center";
+      ctx.strokeStyle = "#000000";
+      ctx.fillStyle = "#32a852";
+      ctx.fillRect(canvas.width / 2 - 100, canvas.height / 2 + 20, 200, 80);
+      ctx.font = "20px Georgia";
+      ctx.textAlign = "center";
 
-ctx.fillStyle = "#000000";
-var rectHeight = 80;
-var rectWidth = 200;
-var rectX = (canvas.width / 2)-100;
-var rectY = (canvas.height / 2)+20;
-ctx.fillText("Play Again!",rectX+(rectWidth/2),rectY+(rectHeight/2));
-ctx.strokeStyle = "#000000";
-ctx.fillStyle = "#a84432";
-ctx.fillRect((canvas.width / 2)-100, (canvas.height / 2)+120,200, 80);
-ctx.font="20px Georgia";
-ctx.textAlign="center";
-ctx.fillStyle = "#000000";
-var rectHeight2 = 80;
-var rectWidth2 = 200;
-var rectX2 = (canvas.width / 2)-100;
-var rectY2 = (canvas.height / 2)+120;
-ctx.fillText("Home!",rectX2+(rectWidth2/2),rectY2+(rectHeight2/2));
-canvas.addEventListener('click',Buttons);
+      ctx.fillStyle = "#000000";
+      var rectHeight = 80;
+      var rectWidth = 200;
+      var rectX = canvas.width / 2 - 100;
+      var rectY = canvas.height / 2 + 20;
+      ctx.fillText(
+        "Play Again!",
+        rectX + rectWidth / 2,
+        rectY + rectHeight / 2
+      );
+      ctx.strokeStyle = "#000000";
+      ctx.fillStyle = "#a84432";
+      ctx.fillRect(canvas.width / 2 - 100, canvas.height / 2 + 120, 200, 80);
+      ctx.font = "20px Georgia";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#000000";
+      var rectHeight2 = 80;
+      var rectWidth2 = 200;
+      var rectX2 = canvas.width / 2 - 100;
+      var rectY2 = canvas.height / 2 + 120;
+      ctx.fillText("Home!", rectX2 + rectWidth2 / 2, rectY2 + rectHeight2 / 2);
+      canvas.addEventListener("click", Buttons);
     } else if (!this.eaten) {
       if (this.x >= mouse.x) {
         ctx.drawImage(
@@ -464,6 +492,8 @@ const handleEnemies = () => {
             player.x = mouse.x = canvas.width / 2;
             player.y = mouse.y = canvas.height / 2;
             gameState(0);
+            handleLives();
+
           } else {
             soundEatPlay();
             enemiesDie.push(enemies[i]);
@@ -590,10 +620,9 @@ const player = new Player();
 
 const addPauseAndPlay = () => {
   if (pause) {
-    pauseAndPlayImg.src="imgs/play.png"
-
+    pauseAndPlayImg.src = "imgs/play.png";
   } else {
-    pauseAndPlayImg.src="imgs/pause.png"
+    pauseAndPlayImg.src = "imgs/pause.png";
   }
 };
 
@@ -602,16 +631,17 @@ pauseAndPlayImg.addEventListener("click", (e) => {
   if (!pause) {
     initEnemies();
   }
-  console.log(e)
 });
+
+
 
 const initEnemies = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   ctx.font = "30px Comic Sans MS";
   ctx.fillStyle = "black";
-  ctx.fillText("Score:"+score, 10, 30);
-  ctx.fillText("Lives:"+myLives, canvas.width-130, 30);
+  ctx.fillText("Score:" + score, 10, 30);
+  // ctx.fillText("Lives:"+myLives, canvas.width-130, 30);
   addPauseAndPlay();
   handleBubbles();
   handleEnemies();

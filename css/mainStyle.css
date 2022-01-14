@@ -17,9 +17,16 @@ body {
 .setting {
   display: flex;
   justify-content:end;
+  place-items: center;
     padding: 10px 10px 0 10px;
     /* padding: ; */
 
+}
+.setting #pauseAndPlayImg{
+  cursor: pointer;
+}
+.setting #lives{
+  margin-right: 10px;
 }
 
 #canvas {
