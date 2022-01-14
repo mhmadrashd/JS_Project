@@ -5,7 +5,7 @@
 }
 body {
   width: 100vw;
-  height: 93vh;
+  height: 91vh;
   display: flex;
   /* justify-content: center; */
   /* align-items: center; */
@@ -15,7 +15,7 @@ body {
   background-size: cover;
 }
 
-.game-over{
+.display-over-success {
   position: absolute;
   left: 40%;
   top: 20%;
@@ -27,14 +27,15 @@ body {
   display: none;
 }
 
-.game-over .btns{
+.display-over-success .btns {
   display: flex;
   justify-content: space-between;
   gap: 15px;
   margin-top: 15px;
 }
 
-#home , #play-again{
+#home,
+#play-again {
   color: black;
   cursor: pointer;
   padding: 3px 10px;
@@ -43,36 +44,76 @@ body {
   /* color: white; */
 }
 
-
-#home{
+#home {
   border: 2px solid blue;
 }
 
-#play-again{
+#play-again {
   border: 2px solid green;
 }
 
-
-#home:hover{
-  background-color: blue ;
+#home:hover {
+  background-color: blue;
 }
 
-#play-again:hover{
-  background-color: green ;
+#play-again:hover {
+  background-color: green;
 }
 
 .setting {
   display: flex;
-  justify-content:end;
+  justify-content: space-between;
   place-items: center;
-    padding: 10px 10px 0 10px;
-    /* padding: ; */
-
+  padding: 10px 10px 0 10px;
+  /* padding: ; */
 }
-.setting #pauseAndPlayImg{
+
+.setting .scores {
+  position: relative;
+}
+
+.setting .scores .progress {
+  width: 300px;
+  height: 20px;
+  background-color: #9a9a9a;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: 100px 100px 100px 5px;
+}
+#number-score{
+  padding-left: 5px;
+  font-size: 20px;
+  align-self: center;
+  font-weight: bold;
+}
+
+.bar-level {
+  max-width: 100px;
+}
+#level-1 {
+  border-radius: 15px 0px 0px 15px;
+}
+
+#level-3 {
+  border-radius: 0px 15px 15px 0px;
+}
+
+.container-imgs {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  position: absolute;
+  top: -2px;
+}
+
+.displayInScore {
+  width: 30px;
+  height: 25px;
+}
+
+.setting #pauseAndPlayImg {
   cursor: pointer;
 }
-.setting #lives{
+.setting #lives {
   margin-right: 10px;
 }
 

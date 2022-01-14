@@ -2,12 +2,20 @@ const livesContainer = document.getElementById("lives");
 const heart = document.getElementsByClassName("live");
 
 const gameOverContainer = document.getElementsByClassName("game-over")[0];
+// const gameSuccessContainer = document.getElementsByClassName("game-success")[0];
+const imageStateGame = document.getElementById("imageStateGame");
+const numberScore = document.getElementById("number-score");
+
 const homeButton = document.getElementById("home");
 const playAgainButton = document.getElementById("play-again");
 
+// progress bar
+const levelOne = document.getElementById("level-1");
+const levelTwo = document.getElementById("level-2");
+const levelThree = document.getElementById("level-3");
+
 const localLevel = localStorage.getItem("level");
 console.log(localLevel);
-
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -36,6 +44,7 @@ let audioEat;
 
 // pause game
 let pause = false;
+let win = false;
 const pauseAndPlayImg = document.getElementById("pauseAndPlayImg");
 
 //  games
@@ -45,20 +54,42 @@ const handleLives = () => {
     heart[myLives].src = "imgs/heart-outline.png";
   }
 };
+
 let nextLevel;
 let bigFishesNo;
-if(localLevel == "Easy") {
+if (localLevel == "Easy") {
   nextLevel = 5;
   bigFishesNo = 3;
-}
-else if(localLevel == "Medium") {
+} else if (localLevel == "Medium") {
   nextLevel = 10;
   bigFishesNo = 4;
-}
-else if(localLevel == "Difficult") {
+} else if (localLevel == "Difficult") {
   nextLevel = 15;
   bigFishesNo = 5;
 }
+
+const handleProgressBar = (score) => {
+  let getScore;
+
+  if (score == nextLevel * 3) {
+    ctx.clearRect(0, 0, canvas.Width, canvas.Width);
+    win = true;
+    imageStateGame.src = "imgs/success.png";
+    gameOverContainer.style.display = "block";
+  }
+
+  if (score <= nextLevel) {
+    getScore = (100 / nextLevel) * score;
+    levelOne.style = `background-color:#c0c050; width:${getScore}px`;
+  } else if (score <= nextLevel * 2) {
+    getScore = (100 / (nextLevel * 2)) * score;
+    levelTwo.style = `background-color:#bf4d22; width:${getScore}px`;
+  } else if (score <= nextLevel * 3) {
+    getScore = (100 / (nextLevel * 3)) * score;
+    levelThree.style = `background-color:#7a1285; width:${getScore}px`;
+  }
+};
+
 function gameState(value) {
   // 0 >> Change Lives
 
@@ -76,11 +107,12 @@ function gameState(value) {
       stateGame = 0;
     }
   }
- 
+
   // 1 >> Change Score
   else if (value == 1) {
     score++;
     localStorage.setItem("score", score);
+    handleProgressBar(score);
     // Next Level
     if (score % nextLevel == 0) {
       if (stateLevel < 3) {
@@ -237,7 +269,6 @@ class Player {
       ctx.clearRect(0, 0, canvas.Width, canvas.Width);
       handleLives();
       gameOverContainer.style.display = "block";
-      
     } else if (!this.eaten) {
       if (this.x >= mouse.x) {
         ctx.drawImage(
@@ -563,7 +594,7 @@ const handleEnemies = () => {
 
     if (bigFishs >= bigFishesNo && chooseFishToInsert == 2) {
       chooseFishToInsert = Math.floor(Math.random() * (2 - 0)) + 0;
-    } else if (mediumFishs > bigFishesNo+1 && chooseFishToInsert == 1) {
+    } else if (mediumFishs > bigFishesNo + 1 && chooseFishToInsert == 1) {
       chooseFishToInsert = 0;
     }
     let apperanceForword = Math.floor(Math.random() * (2 - 0)) + 0 == 1;
@@ -647,7 +678,8 @@ const initEnemies = () => {
 
   ctx.font = "30px Comic Sans MS";
   ctx.fillStyle = "black";
-  ctx.fillText("Score:" + score, 10, 30);
+  numberScore.textContent = score;
+  // ctx.fillText("Score:" + score, 10, 30);
   // ctx.fillText("Lives:"+myLives, canvas.width-130, 30);
   addPauseAndPlay();
   handleBubbles();
@@ -657,7 +689,7 @@ const initEnemies = () => {
   player.update();
   player.draw();
 
-  if (stateGame && !pause) {
+  if (stateGame && !pause && !win) {
     requestAnimationFrame(initEnemies);
   }
 };

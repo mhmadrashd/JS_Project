@@ -5,40 +5,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/mainStyle.css" />
-    <link rel="icon" href="imgs/fish.png">
+    <link rel="icon" href="imgs/fish.png" />
     <title>Fish Game</title>
-
   </head>
   <body>
-    <div class="game-over">
-      <img src="imgs/lose.png" />
+    <div class="game-over display-over-success">
+      <img id="imageStateGame" src="imgs/lose.png" />
 
-      <div class="btns"> 
-        <div id="home">Home</div>
-        <div id="play-again">Play again</div>
-      </div>
-    </div>
-
-    <div class="game-over">
-      <img src="imgs/lose.png" />
-
-      <div class="btns"> 
+      <div class="btns">
         <div id="home">Home</div>
         <div id="play-again">Play again</div>
       </div>
     </div>
 
     <div class="setting">
-      <div id="lives">
-        <img src="imgs/heart.png" class="live">
-        <img src="imgs/heart.png" class="live">
-        <img src="imgs/heart.png" class="live">
-        <img src="imgs/heart.png" class="live">
-        <img src="imgs/heart.png" class="live">
+      <div class="scores">
+        <div class="container-imgs">
+          <img class="displayInScore" src="imgs/smallfish/1.png" />
+          <img class="displayInScore" src="imgs/mediumfish/1.png" />
+          <img class="displayInScore" src="imgs/largfish/1.png" />
+        </div>
+
+        <div class="progress">
+          <div class="bar-level" id="level-1"></div>
+          <div class="bar-level" id="level-2"></div>
+          <div class="bar-level" id="level-3"></div>
+          <div id="number-score">0</div>
+        </div>
       </div>
 
-      <img src="imgs/pause.png" id="pauseAndPlayImg">
+      <div id="lives">
+        <img src="imgs/heart.png" class="live" />
+        <img src="imgs/heart.png" class="live" />
+        <img src="imgs/heart.png" class="live" />
+        <img src="imgs/heart.png" class="live" />
+        <img src="imgs/heart.png" class="live" />
+      </div>
 
+      <img src="imgs/pause.png" id="pauseAndPlayImg" />
     </div>
     <canvas id="canvas"></canvas>
 
