@@ -263,7 +263,7 @@ ul {
   z-index: -1;
   transform: skewY(-6deg);
   transform-origin: top left;
-  
+
 }
 .landing .container {
   min-height: calc(100vh - 72px);
@@ -283,7 +283,7 @@ ul {
 .landing .text h1 {
   font-size: 40px;
   margin: 0;
-  letter-spacing: -2px; 
+  letter-spacing: -2px;
   overflow: hidden;
   white-space: nowrap;
   animation: control-width 3s steps(21) .3s both, blink 0.5s infinite;
@@ -297,10 +297,10 @@ ul {
   font-size: 23px;
   line-height: 1.7;
   margin: 5px 0 0;
-  max-width: 525px; 
+  max-width: 525px;
   overflow: hidden;
   white-space: nowrap;
-  
+
 }
 .landing .text #p1{
   /* 2s => duration * steps(21) =>  for number of show text *  2s =>  delay * both => for mode backword,forward */
