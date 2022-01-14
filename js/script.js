@@ -5,16 +5,15 @@ const gameOverContainer = document.getElementsByClassName("game-over")[0];
 const homeButton = document.getElementById("home");
 const playAgainButton = document.getElementById("play-again");
 
-
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = document.body.clientWidth; //document.width is obsolete
 canvas.height = document.body.clientHeight; //document.height is obsolet
 // Sound
-if(!localStorage.getItem("firstScore")){
-localStorage.setItem("firstScore", 0);
-localStorage.setItem("secondScore", 0);
-localStorage.setItem("thirdScore", 0);
+if (!localStorage.getItem("firstScore")) {
+  localStorage.setItem("firstScore", 0);
+  localStorage.setItem("secondScore", 0);
+  localStorage.setItem("thirdScore", 0);
 }
 if (localStorage.getItem("Status") == 0) {
   localStorage.setItem("lives", 5);
@@ -35,14 +34,12 @@ let audioEat;
 let pause = false;
 const pauseAndPlayImg = document.getElementById("pauseAndPlayImg");
 
-
 //  games
 const handleLives = () => {
   // livesContainer.innerHTML = "";
-  if(myLives !=5){
-  heart[myLives].src = "imgs/heart-outline.png"
+  if (myLives != 5) {
+    heart[myLives].src = "imgs/heart-outline.png";
   }
-
 };
 
 function gameState(value) {
@@ -66,7 +63,7 @@ function gameState(value) {
   // 1 >> Change Score
   else if (value == 1) {
     score++;
-      localStorage.setItem("score", score);
+    localStorage.setItem("score", score);
     // Next Level
     if (score % 10 == 0) {
       if (stateLevel < 3) {
@@ -118,12 +115,12 @@ canvas.addEventListener("mousedown", (e) => {
 homeButton.onclick = () => {
   localStorage.setItem("Status", 0);
   window.location.replace("index.html");
-}
+};
 
 playAgainButton.onclick = () => {
   localStorage.setItem("Status", 0);
   window.location.reload();
-}
+};
 // function Buttons() {
 //   if (
 //     mouse.x > canvas.width / 2 - 100 &&
@@ -144,8 +141,6 @@ playAgainButton.onclick = () => {
 //     window.location.replace("index.html");
 //   }
 // }
-
-
 
 const playerLeft = new Image();
 playerLeft.src = "imgs/fish_swim_left.png";
@@ -208,19 +203,16 @@ class Player {
     ctx.closePath();
     // ctx.fillRect(this.x,this.y,this.radius,10);
     if (stateGame == 0) {
-
-  if(score>localStorage.getItem("firstScore")){
+      if (score > localStorage.getItem("firstScore")) {
         localStorage.setItem("thirdScore", localStorage.getItem("secondScore"));
-    localStorage.setItem("secondScore", localStorage.getItem("firstScore"));
-    localStorage.setItem("firstScore", score);
-  }
-  else if(score>localStorage.getItem("secondScore")){
-    localStorage.setItem("thirdScore", localStorage.getItem("secondScore"));
-    localStorage.setItem("secondScore", score);
-  }
-  else if(score>localStorage.getItem("thirdScore")){
-    localStorage.setItem("thirdScore", score);
-  }
+        localStorage.setItem("secondScore", localStorage.getItem("firstScore"));
+        localStorage.setItem("firstScore", score);
+      } else if (score > localStorage.getItem("secondScore")) {
+        localStorage.setItem("thirdScore", localStorage.getItem("secondScore"));
+        localStorage.setItem("secondScore", score);
+      } else if (score > localStorage.getItem("thirdScore")) {
+        localStorage.setItem("thirdScore", score);
+      }
       localStorage.setItem("stateLevel", 1);
       localStorage.setItem("score", 0);
       localStorage.setItem("lives", 5);
@@ -526,7 +518,6 @@ const handleEnemies = () => {
             player.y = mouse.y = canvas.height / 2;
             gameState(0);
             handleLives();
-
           } else {
             soundEatPlay();
             enemiesDie.push(enemies[i]);
@@ -665,8 +656,6 @@ pauseAndPlayImg.addEventListener("click", (e) => {
     initEnemies();
   }
 });
-
-
 
 const initEnemies = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
