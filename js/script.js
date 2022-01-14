@@ -5,6 +5,9 @@ const gameOverContainer = document.getElementsByClassName("game-over")[0];
 const homeButton = document.getElementById("home");
 const playAgainButton = document.getElementById("play-again");
 
+const localLevel = localStorage.getItem("level");
+console.log(localLevel);
+
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -44,7 +47,20 @@ const handleLives = () => {
   }
 
 };
-
+let nextLevel;
+let bigFishesNo;
+if(localLevel == "Easy") {
+  nextLevel = 5;
+  bigFishesNo = 3;
+}
+else if(localLevel == "Medium") {
+  nextLevel = 10;
+  bigFishesNo = 4;
+}
+else if(localLevel == "Difficult") {
+  nextLevel = 15;
+  bigFishesNo = 5;
+}
 function gameState(value) {
   // 0 >> Change Lives
 
@@ -68,7 +84,7 @@ function gameState(value) {
     score++;
       localStorage.setItem("score", score);
     // Next Level
-    if (score % 10 == 0) {
+    if (score % nextLevel == 0) {
       if (stateLevel < 3) {
         stateLevel++;
         localStorage.setItem("stateLevel", stateLevel);
@@ -553,9 +569,9 @@ const handleEnemies = () => {
     let bigFishs = enemies.filter((fish) => fish.id == 3).length;
     let mediumFishs = enemies.filter((fish) => fish.id == 2).length;
 
-    if (bigFishs >= 3 && chooseFishToInsert == 2) {
+    if (bigFishs >= bigFishesNo && chooseFishToInsert == 2) {
       chooseFishToInsert = Math.floor(Math.random() * (2 - 0)) + 0;
-    } else if (mediumFishs > 4 && chooseFishToInsert == 1) {
+    } else if (mediumFishs > bigFishesNo+1 && chooseFishToInsert == 1) {
       chooseFishToInsert = 0;
     }
     let apperanceForword = Math.floor(Math.random() * (2 - 0)) + 0 == 1;
