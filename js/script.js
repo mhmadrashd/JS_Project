@@ -228,39 +228,7 @@ class Player {
       ctx.clearRect(0, 0, canvas.Width, canvas.Width);
       handleLives();
       gameOverContainer.style.display = "block";
-      // ctx.font = "100px Comic Sans MS";
-      // ctx.fillStyle = "red";
-      // ctx.textAlign = "center";
-      // ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
-      // ctx.lineWidth = 4;
-      // ctx.strokeStyle = "#000000";
-      // ctx.fillStyle = "#32a852";
-      // ctx.fillRect(canvas.width / 2 - 100, canvas.height / 2 + 20, 200, 80);
-      // ctx.font = "20px Georgia";
-      // ctx.textAlign = "center";
 
-      // ctx.fillStyle = "#000000";
-      // var rectHeight = 80;
-      // var rectWidth = 200;
-      // var rectX = canvas.width / 2 - 100;
-      // var rectY = canvas.height / 2 + 20;
-      // ctx.fillText(
-      //   "Play Again!",
-      //   rectX + rectWidth / 2,
-      //   rectY + rectHeight / 2
-      // );
-      // ctx.strokeStyle = "#000000";
-      // ctx.fillStyle = "#a84432";
-      // ctx.fillRect(canvas.width / 2 - 100, canvas.height / 2 + 120, 200, 80);
-      // ctx.font = "20px Georgia";
-      // ctx.textAlign = "center";
-      // ctx.fillStyle = "#000000";
-      // var rectHeight2 = 80;
-      // var rectWidth2 = 200;
-      // var rectX2 = canvas.width / 2 - 100;
-      // var rectY2 = canvas.height / 2 + 120;
-      // ctx.fillText("Home!", rectX2 + rectWidth2 / 2, rectY2 + rectHeight2 / 2);
-      // canvas.addEventListener("click", Buttons);
     } else if (!this.eaten) {
       if (this.x >= mouse.x) {
         ctx.drawImage(
