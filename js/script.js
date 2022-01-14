@@ -55,6 +55,15 @@ const handleLives = () => {
   }
 };
 
+//  games
+const handleContinusLives = () => {
+  // livesContainer.innerHTML = "";
+  for (let l=4; l>myLives ; l--) {
+    heart[l].src = "imgs/heart-outline.png";
+  }
+};
+handleContinusLives()
+
 let nextLevel;
 let bigFishesNo;
 if (localLevel == "Easy") {
@@ -89,6 +98,8 @@ const handleProgressBar = (score) => {
     levelThree.style = `background-color:#7a1285; width:${getScore}px`;
   }
 };
+handleProgressBar(score);
+
 
 function gameState(value) {
   // 0 >> Change Lives
