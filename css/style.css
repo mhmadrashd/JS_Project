@@ -369,24 +369,24 @@ ul {
   margin-left: auto;
   margin-right: auto;
 }
-.menu .main-nav  li #btnPlay{
+.menu .main-nav  li #btnPlay,#btnEasy{
   background-color: rgba(10, 213, 10, 0.9);
 }
-.menu .main-nav  li #btnPlay:hover{
+.menu .main-nav  li #btnPlay,#btnEasy:hover{
   background-color: rgba(0, 253, 21, 0.946);
 }
 
-.menu .main-nav  li #btnContinue{
+.menu .main-nav  li #btnContinue,#btnMedium{
   background-color: rgba(238, 12, 99, 0.871);
 }
-.menu .main-nav  li #btnContinue:hover{
+.menu .main-nav  li #btnContinue,#btnMedium:hover{
   background-color: rgba(238, 12, 23, 0.871);
 }
 
-.menu .main-nav  li #btnScores{
+.menu .main-nav  li #btnScores,#btnDifficult{
   background-color: rgba(21, 132, 196, 0.9);
 }
-.menu .main-nav  li #btnScores:hover{
+.menu .main-nav  li #btnScores,#btnDifficult:hover{
   background-color: rgba(21, 196, 187, 0.9);
 }
 
