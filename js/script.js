@@ -736,6 +736,7 @@ function checkSettings() {
   //Check Sounds
   if (localMainSound == 1) {
     audio.play();
+    audio.loop();
   }
   else {
     audio.pause();
