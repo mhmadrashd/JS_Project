@@ -9,20 +9,20 @@ let thirdScore = document.querySelectorAll(".thirdScore");
 let nums = document.querySelectorAll(".stats .number");
 let statsSection = document.querySelector(".stats");
 let started = false; // Function Started ? No
-firstScore[0].textContent =localStorage.getItem("firstScore");
-secondScore[0].textContent =localStorage.getItem("secondScore");
-thirdScore[0].textContent =localStorage.getItem("thirdScore");
+// firstScore[0].textContent =localStorage.getItem("firstScore");
+// secondScore[0].textContent =localStorage.getItem("secondScore");
+// thirdScore[0].textContent =localStorage.getItem("thirdScore");
 
-firstScore[1].dataset.width= (localStorage.getItem("firstScore")/localStorage.getItem("firstScore")*100).toString()+  "%";
-secondScore[1].dataset.width= (localStorage.getItem("secondScore")/localStorage.getItem("firstScore")*100).toString()+  "%";
-thirdScore[1].dataset.width= (localStorage.getItem("thirdScore")/localStorage.getItem("firstScore")*100).toString()+  "%";
+// firstScore[1].dataset.width= (localStorage.getItem("firstScore")/localStorage.getItem("firstScore")*100).toString()+  "%";
+// secondScore[1].dataset.width= (localStorage.getItem("secondScore")/localStorage.getItem("firstScore")*100).toString()+  "%";
+// thirdScore[1].dataset.width= (localStorage.getItem("thirdScore")/localStorage.getItem("firstScore")*100).toString()+  "%";
 console.log(firstScore[1].dataset.width);
-Continue.addEventListener("click",()=>{
-  localStorage.setItem('Status', 1 );
+Continue.addEventListener("click", () => {
+  localStorage.setItem('Status', 1);
 
 });
-Play.addEventListener("click",()=>{
-  localStorage.setItem('Status', 0 );
+Play.addEventListener("click", () => {
+  localStorage.setItem('Status', 0);
 
 });
 
