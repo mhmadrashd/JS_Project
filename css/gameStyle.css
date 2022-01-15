@@ -76,10 +76,6 @@ body {
   width: 35%;
   margin-right: 10px;
 }
-#backSound,#secondSound,#mouse{
-  background-color: rgba(10, 213, 10, 0.9);
-  color: white;
-}
 #backToMenu{
   background-color: rgba(208, 15, 15, 0.863);
   color: white;

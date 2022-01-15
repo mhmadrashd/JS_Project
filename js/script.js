@@ -23,6 +23,10 @@ if (!localStorage.getItem("localMainSound")) {
   localStorage.setItem("localFishSound", 1);
   localStorage.setItem("localMove", 0);// 0 >> Mouse   1 >> keyboard
 }
+if (!localStorage.getItem("level")) {
+  localStorage.setItem("level", "Easy");
+}
+
 
 const livesContainer = document.getElementById("lives");
 const heart = document.getElementsByClassName("live");
@@ -84,7 +88,7 @@ const handleLives = () => {
 //  games
 const handleContinusLives = () => {
   // livesContainer.innerHTML = "";
-  for (let l=4; l>myLives ; l--) {
+  for (let l = 4; l > myLives; l--) {
     heart[l].src = "imgs/heart-outline.png";
   }
 };
@@ -689,6 +693,7 @@ pauseAndPlayImg.addEventListener("click", (e) => {
   if (!pause) {
     initEnemies();
     gameMenu.style.display = "none";
+    menuSettings.style.display = "none";
     checkSettings();
   }
 });
@@ -716,20 +721,17 @@ const initEnemies = () => {
 
 function checkSettings() {
   if (localLevel == "Easy") {
-    btnEasy.style.checked = true;
+    btnEasy.checked = true;
     nextLevel = 5;
     bigFishesNo = 3;
-    console.log("Done1");
   } else if (localLevel == "Medium") {
-    btnEasy.style.checked = true;
+    btnEasy.checked = true;
     nextLevel = 10;
     bigFishesNo = 4;
-    console.log("Done2");
   } else if (localLevel == "Difficult") {
-    btnEasy.style.checked = true;
+    btnEasy.checked = true;
     nextLevel = 15;
     bigFishesNo = 5;
-    console.log("Done3");
   }
   //Check Sounds
   if (localMainSound == 1) {
@@ -777,6 +779,7 @@ btnPlay.onclick = () => {
 };
 
 btnSettings.onclick = () => {
+  loadLocalSettings();
   gameMenu.style.display = "none";
   menuSettings.style.display = "block";
 };
@@ -825,8 +828,53 @@ fishSound.onclick = () => {
   }
   refreshVariables();
 };
+
 btnBackToMenu.onclick = () => {
   gameMenu.style.display = "block";
   menuSettings.style.display = "none";
 };
 
+function loadLocalSettings() {
+  refreshVariables();
+  if (localLevel == "Easy") {
+    btnEasy.checked = true;
+  } else if (localLevel == "Medium") {
+    btnMedium.checked = true;
+  } else if (localLevel == "Difficult") {
+    btnDifficult.checked = true;
+  }
+  if (localMainSound == 1) {
+    mainSound.style.backgroundColor = "#0ad50a";
+    mainSound.style.opacity = .9;
+    mainSound.style.color = "white";
+  }
+  else {
+    mainSound.style.backgroundColor = "white";
+    mainSound.style.color = "black";
+  }
+  if (localFishSound == 1) {
+    fishSound.style.backgroundColor = "#0ad50a";
+    fishSound.style.opacity = .9;
+    fishSound.style.color = "white";
+  }
+  else {
+    fishSound.style.backgroundColor = "white";
+    fishSound.style.color = "black";
+  }
+  if (localMove == 0) {
+    moveByMouse.style.backgroundColor = "#0ad50a";
+    moveByMouse.style.opacity = .9;
+    moveByMouse.style.color = "white";
+
+    moveByKeyboard.style.backgroundColor = "white";
+    moveByKeyboard.style.color = "black";
+  }
+  else {
+    moveByMouse.style.backgroundColor = "white";
+    moveByMouse.style.color = "black";
+
+    moveByKeyboard.style.backgroundColor = "#0ad50a";
+    moveByKeyboard.style.opacity = .9;
+    moveByKeyboard.style.color = "white";
+  }
+}
