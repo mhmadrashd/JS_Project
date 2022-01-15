@@ -1,0 +1,262 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100vw;
+  height: 91vh;
+  display: flex;
+  flex-flow: column;
+  background-image: url(../imgs/background.png);
+  background-size: cover;
+}
+
+.menu {
+  position: absolute;
+  left: 36%;
+  top: 20%;
+  background-color: rgba(0, 0, 0, 0.939);
+  border-radius: 25px;
+  border: 5px dotted rgb(255, 174, 0);
+  text-align: center;
+  gap: 15px;
+  width: 30%;
+  height: 60%;
+  z-index: 1;
+  display: block;
+}
+.menu h1{
+  margin: 35px 0px;
+  border-radius: 20px;
+  color: white;
+}
+.menu button{
+  display: block;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 25px;
+  cursor: pointer;
+}
+.menu .container  #btnPlay{
+  background-color: rgba(10, 213, 10, 0.9);
+}
+.menu .container  #btnPlay:hover{
+  background-color: rgba(0, 253, 21, 0.946);
+}
+
+.menu .container  #btnSettings{
+  background-color: rgb(187, 181, 7);
+}
+.menu .container  #btnSettings:hover{
+  background-color: rgba(225, 85, 10, 0.919);
+}
+
+.menu .container  #btnExit{
+  background-color: rgba(21, 132, 196, 0.9);
+}
+.menu .container  #btnExit:hover{
+  background-color: rgba(21, 196, 187, 0.9);
+}
+.settings{
+  display: none;
+  color: white;
+}
+.settings h1{
+  margin: 10px 0px 20px 0px;
+  border-radius: 20px;
+}
+.settings button{
+  display: inline-block;
+  width: 35%;
+  margin-right: 10px;
+}
+#backSound,#secondSound,#mouse{
+  background-color: rgba(10, 213, 10, 0.9);
+  color: white;
+}
+#backToMenu{
+  background-color: rgba(208, 15, 15, 0.863);
+  color: white;
+}
+
+
+
+.cont {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 25px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.cont input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.cont:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.cont input:checked ~ .checkmark {
+  background-color: rgba(10, 213, 10, 0.9);
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.cont input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.cont .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+
+
+
+
+.display-over-success {
+  position: absolute;
+  left: 40%;
+  top: 20%;
+  background-color: rgba(10, 213, 10, 0.9);
+  padding: 50px;
+  border-radius: 25px;
+  text-align: center;
+  gap: 15px;
+  display: none;
+}
+
+.display-over-success .btns {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+#home,
+#play-again {
+  color: black;
+  cursor: pointer;
+  padding: 3px 10px;
+  border-radius: 11px;
+  font-size: 25px;
+  /* color: white; */
+}
+
+#home {
+  border: 2px solid blue;
+}
+
+#play-again {
+  border: 2px solid green;
+}
+
+#home:hover {
+  background-color: blue;
+}
+
+#play-again:hover {
+  background-color: green;
+}
+
+.setting {
+  display: flex;
+  justify-content: space-between;
+  place-items: center;
+  padding: 10px 10px 0 10px;
+  /* padding: ; */
+}
+
+.setting .scores {
+  position: relative;
+}
+
+.setting .scores .progress {
+  width: 300px;
+  height: 22px;
+  background-color: #9a9a9a;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: 100px 100px 100px 5px;
+}
+#number-score{
+  padding-left: 5px;
+  font-size: 20px;
+  align-self: center;
+  font-weight: bold;
+}
+
+.bar-level {
+  max-width: 100px;
+}
+#level-1 {
+  border-radius: 15px 0px 0px 15px;
+}
+
+#level-3 {
+  border-radius: 0px 15px 15px 0px;
+}
+
+.container-imgs {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  position: absolute;
+  top: -2px;
+}
+
+.displayInScore {
+  width: 30px;
+  height: 25px;
+}
+
+.setting #pauseAndPlayImg {
+  cursor: pointer;
+}
+.setting #lives {
+  margin-right: 10px;
+}
+
+#canvas {
+  /* background: linear-gradient(to bottom, rgb(39, 141, 175), rgb(5, 5, 58)); */
+  background-repeat: no-repeat;
+  background-position: center center;
+}

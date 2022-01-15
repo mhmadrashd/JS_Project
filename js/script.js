@@ -1,3 +1,29 @@
+//Menu Game
+const gameMenu = document.getElementById("menu");
+const menuSettings = document.getElementById("menuSettings");
+const btnPlay = document.getElementById("btnPlay");
+const btnSettings = document.getElementById("btnSettings");
+const btnExit = document.getElementById("btnExit");
+
+//Settings
+const btnEasy = document.getElementById("btnEasy");
+const btnMedium = document.getElementById("btnMedium");
+const btnDifficult = document.getElementById("btnDifficult");
+const mainSound = document.getElementById("backSound");
+const fishSound = document.getElementById("secondSound");
+const moveByMouse = document.getElementById("mouse");
+const moveByKeyboard = document.getElementById("keyboard");
+const btnBackToMenu = document.getElementById("backToMenu");
+
+var localMainSound = localStorage.getItem("localMainSound");
+var localFishSound = localStorage.getItem("localFishSound");
+var localMove = localStorage.getItem("localMove");
+if (!localStorage.getItem("localMainSound")) {
+  localStorage.setItem("localMainSound", 1);
+  localStorage.setItem("localFishSound", 1);
+  localStorage.setItem("localMove", 0);// 0 >> Mouse   1 >> keyboard
+}
+
 const livesContainer = document.getElementById("lives");
 const heart = document.getElementsByClassName("live");
 
@@ -14,13 +40,13 @@ const levelOne = document.getElementById("level-1");
 const levelTwo = document.getElementById("level-2");
 const levelThree = document.getElementById("level-3");
 
-const localLevel = localStorage.getItem("level");
-console.log(localLevel);
+var localLevel = localStorage.getItem("level");
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = document.body.clientWidth; //document.width is obsolete
 canvas.height = document.body.clientHeight; //document.height is obsolet
+
 // Sound
 if (!localStorage.getItem("firstScore")) {
   localStorage.setItem("firstScore", 0);
@@ -57,16 +83,7 @@ const handleLives = () => {
 
 let nextLevel;
 let bigFishesNo;
-if (localLevel == "Easy") {
-  nextLevel = 5;
-  bigFishesNo = 3;
-} else if (localLevel == "Medium") {
-  nextLevel = 10;
-  bigFishesNo = 4;
-} else if (localLevel == "Difficult") {
-  nextLevel = 15;
-  bigFishesNo = 5;
-}
+
 
 const handleProgressBar = (score) => {
   let getScore;
@@ -99,7 +116,9 @@ function gameState(value) {
     if (myLives) {
       localStorage.setItem("lives", myLives);
 
+      //hid main fish
       player.eaten = true;
+      //Show main fish
       setTimeout(() => {
         player.eaten = false;
       }, 1000);
@@ -142,8 +161,8 @@ sound();
 soundEat();
 handleLives();
 
-// audio.play()
-// audio.loop()
+
+
 //player
 const mouse = {
   x: canvas.width / 2,
@@ -158,7 +177,6 @@ canvas.addEventListener("mousedown", (e) => {
   mouse.click = true;
   mouse.x = e.offsetX;
   mouse.y = e.offsetY;
-  // console.log(mouse.x,mouse.y);
 });
 
 homeButton.onclick = () => {
@@ -170,26 +188,6 @@ playAgainButton.onclick = () => {
   localStorage.setItem("Status", 0);
   window.location.reload();
 };
-// function Buttons() {
-//   if (
-//     mouse.x > canvas.width / 2 - 100 &&
-//     mouse.x < canvas.width / 2 + 100 &&
-//     mouse.y > canvas.height / 2 + 20 &&
-//     mouse.y < canvas.height / 2 + 100
-//   ) {
-//     localStorage.setItem("Status", 0);
-//     window.location.reload();
-//   }
-//   if (
-//     mouse.x > canvas.width / 2 - 100 &&
-//     mouse.x < canvas.width / 2 + 100 &&
-//     mouse.y > canvas.height / 2 + 120 &&
-//     mouse.y < canvas.height / 2 + 200
-//   ) {
-//     localStorage.setItem("Status", 0);
-//     window.location.replace("index.html");
-//   }
-// }
 
 const playerLeft = new Image();
 playerLeft.src = "imgs/fish_swim_left.png";
@@ -218,7 +216,7 @@ class Player {
     const dx = this.x - mouse.x;
     const dy = this.y - mouse.y;
     if (mouse.x != this.x) {
-      this.x -= dx / 30;
+      this.x -= dx / 30; //30 main fish speed   
     }
     if (mouse.y != this.y) {
       this.y -= dy / 30;
@@ -535,7 +533,10 @@ const handleEnemies = () => {
             gameState(0);
             handleLives();
           } else {
-            soundEatPlay();
+
+            if (localFishSound == 1) {
+              soundEatPlay();
+            }
             enemiesDie.push(enemies[i]);
             enemies.splice(i, 1);
             gameState(1);
@@ -569,7 +570,10 @@ const handleEnemies = () => {
         if (enemies[i].id != enemies[j].id) {
           // console.log("eat")
           let removeWhichIndex = enemies[i].id > enemies[j].id ? j : i;
-          soundEatPlay();
+          if (localFishSound == 1) {
+            soundEatPlay();
+          }
+
           enemiesDie.push(enemies[removeWhichIndex]);
           enemies.splice(removeWhichIndex, 1);
         }
@@ -668,8 +672,13 @@ const addPauseAndPlay = () => {
 
 pauseAndPlayImg.addEventListener("click", (e) => {
   pause = !pause;
+  audio.pause();
+  audioEat.pause();
+  gameMenu.style.display = "block";
   if (!pause) {
     initEnemies();
+    gameMenu.style.display = "none";
+    checkSettings();
   }
 });
 
@@ -694,4 +703,119 @@ const initEnemies = () => {
   }
 };
 
-initEnemies();
+function checkSettings() {
+  if (localLevel == "Easy") {
+    btnEasy.style.checked = true;
+    nextLevel = 5;
+    bigFishesNo = 3;
+    console.log("Done1");
+  } else if (localLevel == "Medium") {
+    btnEasy.style.checked = true;
+    nextLevel = 10;
+    bigFishesNo = 4;
+    console.log("Done2");
+  } else if (localLevel == "Difficult") {
+    btnEasy.style.checked = true;
+    nextLevel = 15;
+    bigFishesNo = 5;
+    console.log("Done3");
+  }
+  //Check Sounds
+  if (localMainSound == 1) {
+    audio.play();
+  }
+  else {
+    audio.pause();
+  }
+  if (localFishSound == 1) {
+    audioEat.play();
+  }
+  else {
+    audioEat.pause();
+  }
+
+  if (localMove == 0) {
+    //Mouse code
+  }
+  else {
+    //keyboard
+  }
+
+}
+function refreshVariables() {
+  localMainSound = localStorage.getItem("localMainSound");
+  localFishSound = localStorage.getItem("localFishSound");
+  localMove = localStorage.getItem("localMove");
+  localLevel = localStorage.getItem("level");
+}
+
+btnExit.onclick = () => {
+  localStorage.setItem("Status", 0);
+  window.location.replace("index.html");
+};
+
+btnPlay.onclick = () => {
+  //check if new game or conrinue pused game
+  if (!pause) {
+    localStorage.setItem("Status", 0);
+  }
+  gameMenu.style.display = "none";
+  pause = false;
+  initEnemies();
+  checkSettings();
+};
+
+btnSettings.onclick = () => {
+  gameMenu.style.display = "none";
+  menuSettings.style.display = "block";
+};
+
+btnEasy.addEventListener("click", () => {
+  localStorage.setItem("level", "Easy");
+  refreshVariables();
+})
+
+btnMedium.addEventListener("click", () => {
+  localStorage.setItem("level", "Medium");
+  refreshVariables();
+})
+
+btnDifficult.addEventListener("click", () => {
+  localStorage.setItem("level", "Difficult");
+  refreshVariables();
+})
+
+mainSound.onclick = () => {
+  if (localMainSound == 0) {
+    localStorage.setItem("localMainSound", 1);
+    mainSound.style.backgroundColor = "#0ad50a";
+    mainSound.style.opacity = .9;
+    mainSound.style.color = "white";
+  }
+  else {
+    localStorage.setItem("localMainSound", 0);
+    mainSound.style.backgroundColor = "white";
+    mainSound.style.color = "black";
+  }
+  refreshVariables();
+};
+
+fishSound.onclick = () => {
+  if (localFishSound == 0) {
+    localStorage.setItem("localFishSound", 1);
+    fishSound.style.backgroundColor = "#0ad50a";
+    fishSound.style.opacity = .9;
+    fishSound.style.color = "white";
+  }
+  else {
+    localStorage.setItem("localFishSound", 0);
+    fishSound.style.backgroundColor = "white";
+    fishSound.style.color = "black";
+  }
+  refreshVariables();
+};
+btnBackToMenu.onclick = () => {
+  gameMenu.style.display = "block";
+  menuSettings.style.display = "none";
+};
+
