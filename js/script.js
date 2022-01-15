@@ -185,13 +185,49 @@ const mouse = {
   click: false,
 };
 canvas.addEventListener("mouseup", () => {
-  mouse.click = false;
+  if (localMove == 0) {
+    mouse.click = false;
+  }
 });
 
 canvas.addEventListener("mousedown", (e) => {
-  mouse.click = true;
-  mouse.x = e.offsetX;
-  mouse.y = e.offsetY;
+  if (localMove == 0) {
+    mouse.click = true;
+    mouse.x = e.offsetX;
+    mouse.y = e.offsetY;
+  }
+});
+
+//Keyboard keys
+let keysPressed = {};
+window.addEventListener('keydown', (e) => {
+  if (localMove == 1) {
+    keysPressed[e.key] = true;
+    mouse.click = true;
+    if (mouse.x > 0) {
+      keysPressed['ArrowLeft'] == true ? mouse.x -= 15 : 0;
+      e.key == 'ArrowLeft' ? mouse.x -= 15 : 0;
+    }
+    if (mouse.x < canvas.width) {
+      keysPressed['ArrowRight'] == true ? mouse.x += 15 : 0;
+      e.key == 'ArrowRight' ? mouse.x += 15 : 0;
+    }
+    if (mouse.y > 0) {
+      keysPressed['ArrowUp'] == true ? mouse.y -= 15 : 0;
+      e.key == 'ArrowUp' ? mouse.y -= 15 : 0;
+    }
+    if (mouse.y < canvas.height) {
+      keysPressed['ArrowDown'] == true ? mouse.y += 15 : 0;
+      e.key == 'ArrowDown' ? mouse.y += 15 : 0;
+    }
+  }
+});
+
+window.addEventListener('keyup', (e) => {
+  if (localMove == 1) {
+    delete keysPressed[e.key];
+    mouse.click = false;
+  }
 });
 
 homeButton.onclick = () => {
@@ -747,14 +783,6 @@ function checkSettings() {
   else {
     audioEat.pause();
   }
-
-  if (localMove == 0) {
-    //Mouse code
-  }
-  else {
-    //keyboard
-  }
-
 }
 function refreshVariables() {
   localMainSound = localStorage.getItem("localMainSound");
@@ -829,6 +857,30 @@ fishSound.onclick = () => {
   }
   refreshVariables();
 };
+
+moveByKeyboard.addEventListener("click", detectMoveInputs);
+moveByMouse.addEventListener("click", detectMoveInputs);
+function detectMoveInputs() {
+  if (localMove == 0) {
+    localStorage.setItem("localMove", 1);
+    moveByKeyboard.style.backgroundColor = "#0ad50a";
+    moveByKeyboard.style.opacity = .9;
+    moveByKeyboard.style.color = "white";
+
+    moveByMouse.style.backgroundColor = "white";
+    moveByMouse.style.color = "black";
+  }
+  else {
+    localStorage.setItem("localMove", 0);
+    moveByMouse.style.backgroundColor = "#0ad50a";
+    moveByMouse.style.opacity = .9;
+    moveByMouse.style.color = "white";
+
+    moveByKeyboard.style.backgroundColor = "white";
+    moveByKeyboard.style.color = "black";
+  }
+  refreshVariables();
+}
 
 btnBackToMenu.onclick = () => {
   gameMenu.style.display = "block";
